@@ -1,4 +1,4 @@
-function RequestList({ requests }) {
+function RequestList({ requests, updateStatus }) {
   return (
     <>
       <h3>Service Requests</h3>
@@ -17,10 +17,15 @@ function RequestList({ requests }) {
                 listStyle: "none",
               }}
             >
+              {/* TITLE */}
               <strong>{req.title}</strong>
               <br />
-              {req.description}
-              <br />
+
+              {/* DESCRIPTION */}
+              <span>{req.description}</span>
+              <br /><br />
+
+              {/* PRIORITY + STATUS */}
               Priority:{" "}
               <span
                 style={{
@@ -35,7 +40,38 @@ function RequestList({ requests }) {
               >
                 {req.priority}
               </span>{" "}
-              | Status: {req.status}
+              | Status:{" "}
+              <span
+                style={{
+                  color:
+                    req.status === "OPEN"
+                      ? "blue"
+                      : req.status === "IN_PROGRESS"
+                      ? "purple"
+                      : "gray",
+                  fontWeight: "bold",
+                }}
+              >
+                {req.status}
+              </span>
+
+              <br /><br />
+
+              {/* ACTION BUTTONS */}
+              <button
+                style={{ marginRight: "10px" }}
+                disabled={req.status !== "OPEN"}
+                onClick={() => updateStatus(req.id, "IN_PROGRESS")}
+              >
+                In Progress
+              </button>
+
+              <button
+                disabled={req.status === "CLOSED"}
+                onClick={() => updateStatus(req.id, "CLOSED")}
+              >
+                Close
+              </button>
             </li>
           ))}
         </ul>
