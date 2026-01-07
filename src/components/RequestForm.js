@@ -11,52 +11,112 @@ function RequestForm({
     <div
       style={{
         backgroundColor: "white",
-        padding: "20px",
-        borderRadius: "8px",
-        maxWidth: "500px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+        padding: "25px",
+        borderRadius: "10px",
+        maxWidth: "520px",
+        boxShadow: "0 6px 18px rgba(0,0,0,0.1)",
+        marginBottom: "30px",
       }}
     >
       <form onSubmit={handleSubmit}>
-        <input
-          style={{ width: "100%", padding: "8px" }}
-          type="text"
-          placeholder="Service Title"
-          value={serviceTitle}
-          onChange={(e) => setServiceTitle(e.target.value)}
-        />
+        {/* TITLE */}
+        <div style={{ marginBottom: "16px" }}>
+          <label
+            style={{
+              display: "block",
+              fontWeight: "600",
+              marginBottom: "6px",
+            }}
+          >
+            Service Title
+          </label>
+          <input
+            type="text"
+            value={serviceTitle}
+            onChange={(e) =>
+              setServiceTitle(e.target.value)
+            }
+            placeholder="Eg: Laptop repair"
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "6px",
+              border: "1px solid #d1d5db",
+            }}
+            required
+          />
+        </div>
 
-        <br /><br />
+        {/* DESCRIPTION */}
+        <div style={{ marginBottom: "16px" }}>
+          <label
+            style={{
+              display: "block",
+              fontWeight: "600",
+              marginBottom: "6px",
+            }}
+          >
+            Description
+          </label>
+          <textarea
+            value={description}
+            onChange={(e) =>
+              setDescription(e.target.value)
+            }
+            placeholder="Describe the issue in detail"
+            rows={4}
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "6px",
+              border: "1px solid #d1d5db",
+              resize: "none",
+            }}
+            required
+          />
+        </div>
 
-        <textarea
-          style={{ width: "100%", padding: "8px" }}
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+        {/* PRIORITY */}
+        <div style={{ marginBottom: "20px" }}>
+          <label
+            style={{
+              display: "block",
+              fontWeight: "600",
+              marginBottom: "6px",
+            }}
+          >
+            Priority
+          </label>
+          <select
+            value={priority}
+            onChange={(e) =>
+              setPriority(e.target.value)
+            }
+            style={{
+              width: "100%",
+              padding: "10px",
+              borderRadius: "6px",
+              border: "1px solid #d1d5db",
+            }}
+          >
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
 
-        <br /><br />
-
-        <select
-          style={{ width: "100%", padding: "8px" }}
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
-        >
-          <option>Low</option>
-          <option>Medium</option>
-          <option>High</option>
-        </select>
-
-        <br /><br />
-
+        {/* SUBMIT */}
         <button
+          type="submit"
           style={{
-            padding: "10px",
+            width: "100%",
+            padding: "12px",
             backgroundColor: "#2563eb",
             color: "white",
+            fontWeight: "600",
             border: "none",
+            borderRadius: "8px",
             cursor: "pointer",
-            width: "100%",
           }}
         >
           Submit Request

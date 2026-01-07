@@ -9,7 +9,8 @@ function Dashboard({ children, setRole }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      {/* HEADER BAR */}
       <div
         style={{
           backgroundColor: "#1e293b",
@@ -17,16 +18,18 @@ function Dashboard({ children, setRole }) {
           padding: "15px 30px",
           display: "flex",
           justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <h2>Dashboard</h2>
+        <h2>Smart Service Request Management System</h2>
+
         <button
           onClick={handleLogout}
           style={{
             backgroundColor: "#ef4444",
             color: "white",
             border: "none",
-            padding: "8px",
+            padding: "8px 14px",
             cursor: "pointer",
           }}
         >
@@ -34,7 +37,8 @@ function Dashboard({ children, setRole }) {
         </button>
       </div>
 
-      <div style={{ padding: "30px" }}>{children}</div>
+      {/* PAGE CONTENT */}
+      <div style={{ flex: 1, padding: "30px" }}>{children}</div>
     </div>
   );
 }
