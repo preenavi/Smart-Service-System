@@ -1,19 +1,20 @@
-import { Routes, Route} from "react-router-dom";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-
-
 import { useState } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import RequestForm from "./components/RequestForm";
 import RequestList from "./components/RequestList";
+
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   const [serviceTitle, setServiceTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("Low");
   const [requests, setRequests] = useState([]);
+  const [role, setRole] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +27,7 @@ function App() {
       status: "OPEN",
     };
 
-    setRequests([...requests, serviceRequest]);
+    setRequests((prev) => [...prev, serviceRequest]);
 
     setServiceTitle("");
     setDescription("");
@@ -34,45 +35,62 @@ function App() {
   };
 
   const updateStatus = (id, newStatus) => {
-  const updatedRequests = requests.map((req) =>
-    req.id === id ? { ...req, status: newStatus } : req
-  );
-
-  setRequests(updatedRequests);
-};
-
+    setRequests((prev) =>
+      prev.map((req) =>
+        req.id === id ? { ...req, status: newStatus } : req
+      )
+    );
+  };
 
   return (
-  <Routes>
-    <Route path="/" element={<Login />} />
+    <Routes>
+      <Route path="/" element={<Login setRole={setRole} />} />
 
-    <Route
-      path="/dashboard"
-      element={
-        <Dashboard>
-          <Header title="Smart Service Request System" />
+      <Route
+        path="/dashboard"
+        element={
+          role ? (
+            <Dashboard setRole={setRole}>
+              <Header />
 
-          <RequestForm
-            serviceTitle={serviceTitle}
-            setServiceTitle={setServiceTitle}
-            description={description}
-            setDescription={setDescription}
-            priority={priority}
-            setPriority={setPriority}
-            handleSubmit={handleSubmit}
-          />
+              {role === "USER" && (
+                <>
+                  <h3>Create New Service Request</h3>
+                  <RequestForm
+                    serviceTitle={serviceTitle}
+                    setServiceTitle={setServiceTitle}
+                    description={description}
+                    setDescription={setDescription}
+                    priority={priority}
+                    setPriority={setPriority}
+                    handleSubmit={handleSubmit}
+                  />
+                </>
+              )}
 
-          <RequestList
-            requests={requests}
-            updateStatus={updateStatus}
-          />
+              <h3 style={{ marginTop: "30px" }}>
+                {role === "USER"
+                  ? "My Requests"
+                  : role === "TECHNICIAN"
+                  ? "Assigned Requests"
+                  : "All Service Requests"}
+              </h3>
 
-          <Footer />
-        </Dashboard>
-      }
-    />
-  </Routes>
-);
+              <RequestList
+                requests={requests}
+                updateStatus={updateStatus}
+                role={role}
+              />
+
+              <Footer />
+            </Dashboard>
+          ) : (
+            <Navigate to="/" />
+          )
+        }
+      />
+    </Routes>
+  );
 }
 
 export default App;

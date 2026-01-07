@@ -1,30 +1,40 @@
 import { useNavigate } from "react-router-dom";
 
-function Dashboard({ children }) {
+function Dashboard({ children, setRole }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    setRole(null);
     navigate("/");
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <button
-        onClick={handleLogout}
+    <div style={{ minHeight: "100vh" }}>
+      <div
         style={{
-          float: "right",
-          padding: "8px",
-          backgroundColor: "red",
+          backgroundColor: "#1e293b",
           color: "white",
-          border: "none",
-          cursor: "pointer",
+          padding: "15px 30px",
+          display: "flex",
+          justifyContent: "space-between",
         }}
       >
-        Logout
-      </button>
+        <h2>Dashboard</h2>
+        <button
+          onClick={handleLogout}
+          style={{
+            backgroundColor: "#ef4444",
+            color: "white",
+            border: "none",
+            padding: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Logout
+        </button>
+      </div>
 
-      <h2>Dashboard</h2>
-      {children}
+      <div style={{ padding: "30px" }}>{children}</div>
     </div>
   );
 }

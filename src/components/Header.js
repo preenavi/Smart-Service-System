@@ -1,8 +1,15 @@
-function Header({ title }) {
+function Header() {
   return (
-    <header>
-      <h2>{title}</h2>
-    </header>
+    <div
+      style={{
+        backgroundColor: "#1e293b",
+        color: "white",
+        padding: "15px 30px",
+        marginBottom: "20px",
+      }}
+    >
+      <h2>Smart Service Request Management System</h2>
+    </div>
   );
 }
 

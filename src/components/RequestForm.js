@@ -8,14 +8,20 @@ function RequestForm({
   handleSubmit,
 }) {
   return (
-    <>
-      <h3>Create Service Request</h3>
-
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "8px",
+        maxWidth: "500px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+      }}
+    >
       <form onSubmit={handleSubmit}>
         <input
           style={{ width: "100%", padding: "8px" }}
           type="text"
-          placeholder="Enter service title"
+          placeholder="Service Title"
           value={serviceTitle}
           onChange={(e) => setServiceTitle(e.target.value)}
         />
@@ -24,7 +30,7 @@ function RequestForm({
 
         <textarea
           style={{ width: "100%", padding: "8px" }}
-          placeholder="Enter description"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
@@ -36,24 +42,27 @@ function RequestForm({
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
         >
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
         </select>
 
         <br /><br />
 
         <button
-         style={{
-    padding: "10px",
-    backgroundColor: "#2563eb",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-  }} 
-        type="submit">Submit Request</button>
+          style={{
+            padding: "10px",
+            backgroundColor: "#2563eb",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            width: "100%",
+          }}
+        >
+          Submit Request
+        </button>
       </form>
-    </>
+    </div>
   );
 }
 

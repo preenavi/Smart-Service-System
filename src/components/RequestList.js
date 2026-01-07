@@ -1,82 +1,76 @@
-function RequestList({ requests, updateStatus }) {
+const primaryBtn = {
+  padding: "8px 14px",
+  backgroundColor: "#2563eb",
+  color: "white",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+  marginRight: "10px",
+};
+
+const dangerBtn = {
+  padding: "8px 14px",
+  backgroundColor: "#ef4444",
+  color: "white",
+  border: "none",
+  borderRadius: "4px",
+  cursor: "pointer",
+};
+
+function RequestList({ requests = [], updateStatus, role }) {
   return (
-    <>
-      <h3>Service Requests</h3>
-
+    <ul style={{ padding: 0 }}>
       {requests.length === 0 ? (
-        <p>No requests created yet</p>
+        <p>No requests available</p>
       ) : (
-        <ul>
-          {requests.map((req) => (
-            <li
-              key={req.id}
-              style={{
-                border: "1px solid #ddd",
-                padding: "10px",
-                marginBottom: "10px",
-                listStyle: "none",
-              }}
-            >
-              {/* TITLE */}
-              <strong>{req.title}</strong>
-              <br />
+        requests.map((req) => (
+          <li
+            key={req.id}
+            style={{
+              backgroundColor: "white",
+              padding: "15px",
+              borderRadius: "6px",
+              marginBottom: "15px",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+              listStyle: "none",
+            }}
+          >
+            <strong>{req.title}</strong>
+            <br />
+            {req.description}
+            <br /><br />
 
-              {/* DESCRIPTION */}
-              <span>{req.description}</span>
-              <br /><br />
+            Priority: <b>{req.priority}</b> | Status: <b>{req.status}</b>
 
-              {/* PRIORITY + STATUS */}
-              Priority:{" "}
-              <span
-                style={{
-                  color:
-                    req.priority === "High"
-                      ? "red"
-                      : req.priority === "Medium"
-                      ? "orange"
-                      : "green",
-                  fontWeight: "bold",
-                }}
-              >
-                {req.priority}
-              </span>{" "}
-              | Status:{" "}
-              <span
-                style={{
-                  color:
-                    req.status === "OPEN"
-                      ? "blue"
-                      : req.status === "IN_PROGRESS"
-                      ? "purple"
-                      : "gray",
-                  fontWeight: "bold",
-                }}
-              >
-                {req.status}
-              </span>
+            <br /><br />
 
-              <br /><br />
+            {(role === "TECHNICIAN" || role === "ADMIN") && (
+              <>
+                <button
+                  style={primaryBtn}
+                  disabled={req.status !== "OPEN"}
+                  onClick={() =>
+                    updateStatus(req.id, "IN_PROGRESS")
+                  }
+                >
+                  In Progress
+                </button>
 
-              {/* ACTION BUTTONS */}
-              <button
-                style={{ marginRight: "10px" }}
-                disabled={req.status !== "OPEN"}
-                onClick={() => updateStatus(req.id, "IN_PROGRESS")}
-              >
-                In Progress
-              </button>
-
-              <button
-                disabled={req.status === "CLOSED"}
-                onClick={() => updateStatus(req.id, "CLOSED")}
-              >
-                Close
-              </button>
-            </li>
-          ))}
-        </ul>
+                <button
+                  style={dangerBtn}
+                  disabled={req.status === "CLOSED"}
+                  onClick={() =>
+                    updateStatus(req.id, "CLOSED")
+                  }
+                >
+                  Close
+                </button>
+              </>
+            )}
+          </li>
+        ))
       )}
-    </>
+    </ul>
   );
 }
 
