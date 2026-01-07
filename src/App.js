@@ -1,3 +1,8 @@
+import { Routes, Route} from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+
+
 import { useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -38,26 +43,36 @@ function App() {
 
 
   return (
-    <div>
-      <Header title="Smart Service Request System" />
+  <Routes>
+    <Route path="/" element={<Login />} />
 
-      <main style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
-        <RequestForm
-          serviceTitle={serviceTitle}
-          setServiceTitle={setServiceTitle}
-          description={description}
-          setDescription={setDescription}
-          priority={priority}
-          setPriority={setPriority}
-          handleSubmit={handleSubmit}
-        />
+    <Route
+      path="/dashboard"
+      element={
+        <Dashboard>
+          <Header title="Smart Service Request System" />
 
-        <RequestList requests={requests} updateStatus={updateStatus} />
-      </main>
+          <RequestForm
+            serviceTitle={serviceTitle}
+            setServiceTitle={setServiceTitle}
+            description={description}
+            setDescription={setDescription}
+            priority={priority}
+            setPriority={setPriority}
+            handleSubmit={handleSubmit}
+          />
 
-      <Footer />
-    </div>
-  );
+          <RequestList
+            requests={requests}
+            updateStatus={updateStatus}
+          />
+
+          <Footer />
+        </Dashboard>
+      }
+    />
+  </Routes>
+);
 }
 
 export default App;
