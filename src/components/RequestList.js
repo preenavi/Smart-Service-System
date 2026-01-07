@@ -57,17 +57,31 @@ function RequestList({ requests = [], updateStatus, role }) {
         <ul style={{ padding: 0 }}>
           {requests.map((req) => (
             <li
-              key={req.id}
-              style={{
-                backgroundColor: "white",
-                padding: "20px",
-                borderRadius: "12px",
-                marginBottom: "16px",
-                boxShadow:
-                  "0 4px 12px rgba(0,0,0,0.08)",
-                listStyle: "none",
-              }}
-            >
+  key={req.id}
+  style={{
+    backgroundColor: "white",
+    padding: "20px",
+    borderRadius: "14px",
+    marginBottom: "16px",
+    listStyle: "none",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.12)",
+    transition: "all 0.3s ease",
+    transform: "translateY(0)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.transform =
+      "translateY(-6px) scale(1.02)";
+    e.currentTarget.style.boxShadow =
+      "0 16px 40px rgba(0,0,0,0.18)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.transform =
+      "translateY(0) scale(1)";
+    e.currentTarget.style.boxShadow =
+      "0 8px 20px rgba(0,0,0,0.12)";
+  }}
+>
+
               {/* HEADER ROW */}
               <div
                 style={{

@@ -15,17 +15,17 @@ function App() {
   const [requests, setRequests] = useState([]);
   const [role, setRole] = useState(null);
 
+  // 🔹 Derived dashboard metrics
   const totalRequests = requests.length;
-const openRequests = requests.filter(
-  (r) => r.status === "OPEN"
-).length;
-const inProgressRequests = requests.filter(
-  (r) => r.status === "IN_PROGRESS"
-).length;
-const closedRequests = requests.filter(
-  (r) => r.status === "CLOSED"
-).length;
-
+  const openRequests = requests.filter(
+    (r) => r.status === "OPEN"
+  ).length;
+  const inProgressRequests = requests.filter(
+    (r) => r.status === "IN_PROGRESS"
+  ).length;
+  const closedRequests = requests.filter(
+    (r) => r.status === "CLOSED"
+  ).length;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ const closedRequests = requests.filter(
                     "linear-gradient(135deg, #6366f1, #a855f7)",
                   color: "white",
                   padding: "40px",
-                  borderRadius: "14px",
+                  borderRadius: "16px",
                   marginBottom: "30px",
                   boxShadow:
                     "0 10px 30px rgba(0,0,0,0.15)",
@@ -121,119 +121,83 @@ const closedRequests = requests.filter(
                 </>
               )}
 
-              {/* ADMIN DASHBOARD SHELL */}
-{/* ADMIN DASHBOARD SHELL */}
-{role === "ADMIN" && (
-  <div
-    style={{
-      marginTop: "20px",
-      marginBottom: "40px",
-    }}
-  >
-    <h3 style={{ marginBottom: "16px" }}>
-      System Overview
-    </h3>
+              {/* ADMIN DASHBOARD */}
+              {role === "ADMIN" && (
+                <div style={{ marginBottom: "40px" }}>
+                  <h3 style={{ marginBottom: "16px" }}>
+                    System Overview
+                  </h3>
 
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns:
-          "repeat(auto-fit, minmax(200px, 1fr))",
-        gap: "20px",
-      }}
-    >
-      {/* TOTAL */}
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow:
-            "0 4px 12px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h4>Total Requests</h4>
-        <p
-          style={{
-            fontSize: "28px",
-            fontWeight: "700",
-            color: "#2563eb",
-          }}
-        >
-          {totalRequests}
-        </p>
-      </div>
-
-      {/* OPEN */}
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow:
-            "0 4px 12px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h4>Open Requests</h4>
-        <p
-          style={{
-            fontSize: "28px",
-            fontWeight: "700",
-            color: "#1e40af",
-          }}
-        >
-          {openRequests}
-        </p>
-      </div>
-
-      {/* IN PROGRESS */}
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow:
-            "0 4px 12px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h4>In Progress</h4>
-        <p
-          style={{
-            fontSize: "28px",
-            fontWeight: "700",
-            color: "#6b21a8",
-          }}
-        >
-          {inProgressRequests}
-        </p>
-      </div>
-
-      {/* CLOSED */}
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow:
-            "0 4px 12px rgba(0,0,0,0.08)",
-        }}
-      >
-        <h4>Closed Requests</h4>
-        <p
-          style={{
-            fontSize: "28px",
-            fontWeight: "700",
-            color: "#374151",
-          }}
-        >
-          {closedRequests}
-        </p>
-      </div>
-    </div>
-  </div>
-)}
-
-
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns:
+                        "repeat(auto-fit, minmax(200px, 1fr))",
+                      gap: "20px",
+                    }}
+                  >
+                    {[
+                      {
+                        title: "Total Requests",
+                        value: totalRequests,
+                        color: "#2563eb",
+                      },
+                      {
+                        title: "Open Requests",
+                        value: openRequests,
+                        color: "#1e40af",
+                      },
+                      {
+                        title: "In Progress",
+                        value: inProgressRequests,
+                        color: "#6b21a8",
+                      },
+                      {
+                        title: "Closed Requests",
+                        value: closedRequests,
+                        color: "#374151",
+                      },
+                    ].map((card, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          backgroundColor: "white",
+                          padding: "22px",
+                          borderRadius: "16px",
+                          boxShadow:
+                            "0 8px 20px rgba(0,0,0,0.12)",
+                          transition: "all 0.3s ease",
+                          cursor: "pointer",
+                          transform: "translateY(0)",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform =
+                            "translateY(-6px) scale(1.03)";
+                          e.currentTarget.style.boxShadow =
+                            "0 16px 40px rgba(0,0,0,0.18)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform =
+                            "translateY(0) scale(1)";
+                          e.currentTarget.style.boxShadow =
+                            "0 8px 20px rgba(0,0,0,0.12)";
+                        }}
+                      >
+                        <h4>{card.title}</h4>
+                        <p
+                          style={{
+                            fontSize: "28px",
+                            fontWeight: "700",
+                            color: card.color,
+                          }}
+                        >
+                          {card.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* LIST TITLE */}
               <h3 style={{ marginTop: "30px" }}>
