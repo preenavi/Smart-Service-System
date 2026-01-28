@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import RequestForm from "./components/RequestForm";
@@ -9,6 +10,10 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
+  const API_URL = "http://localhost:8080/api/requests";
+
+  
+
   const [serviceTitle, setServiceTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("Low");
